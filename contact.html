@@ -1,168 +1,330 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UniGuide - ติดต่อเรา</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ติดต่อ – UniGuide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Sarabun', sans-serif; min-height: 100vh; overflow-x: hidden; background: #060818; }
-    .bg-wrap {
-      position: fixed; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(99,60,220,0.55) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(14,165,233,0.45) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(236,72,153,0.25) 0%, transparent 60%),
-        #060818;
+    /* ─── Variables ─── */
+    :root {
+      --teal:        #00d4c8;
+      --dark:        #0a0f1e;
+      --card-bg:     rgba(255,255,255,0.05);
+      --card-border: rgba(0,212,200,0.18);
+      --text-muted:  #9ab0c8;
     }
-    .orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; animation: drift 12s ease-in-out infinite alternate; }
-    .orb-1 { width: 500px; height: 500px; background: rgba(124,58,237,0.5); top: -120px; left: -80px; animation-delay: 0s; }
-    .orb-2 { width: 420px; height: 420px; background: rgba(6,182,212,0.4); bottom: -100px; right: -80px; animation-delay: -4s; }
-    .orb-3 { width: 300px; height: 300px; background: rgba(244,63,94,0.35); top: 35%; right: 15%; animation-delay: -8s; }
-    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.08); } }
 
-    /* Navbar */
-    .glass-nav { background: rgba(255,255,255,0.06) !important; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .navbar-brand { color: #fff !important; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
-    .nav-link { color: rgba(255,255,255,0.75) !important; border-radius: 10px; padding: 7px 16px !important; transition: all 0.25s; font-size: 0.95rem; }
-    .nav-link:hover, .nav-link.active { color: #fff !important; background: rgba(255,255,255,0.12); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* Page header */
-    .page-header { padding: 120px 0 40px; position: relative; z-index: 1; text-align: center; }
-    .page-header h1 { color: #fff; font-weight: 700; }
-    .page-header p { color: rgba(255,255,255,0.55); }
-
-    /* Glass Card */
-    .g-card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border-radius: 24px;
-      padding: 28px;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-      height: 100%;
+    body {
+      background: var(--dark);
+      font-family: 'Sarabun', sans-serif;
+      color: #e0eaf8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
     }
-    .g-card::before {
+
+    body::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(0,120,180,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(0,212,200,0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #060c1a 0%, #0a1428 50%, #061520 100%);
+      z-index: -1;
     }
-    .g-card h4 { color: #fff; font-weight: 600; margin-bottom: 20px; }
 
-    /* Contact items */
-    .contact-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
-    .contact-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-    .contact-label { color: #fff; font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
-    .contact-value { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin: 0; line-height: 1.7; }
-    .contact-value a { color: rgba(255,255,255,0.6); text-decoration: underline; transition: color 0.2s; }
-    .contact-value a:hover { color: #fff; }
+    /* ─── Navbar ─── */
+    .glass-nav {
+      background: rgba(10,15,30,0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,212,200,0.15);
+      padding: 0.75rem 0;
+    }
+    .navbar-brand {
+      font-family: 'Kanit', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff !important;
+      letter-spacing: 0.03em;
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.75) !important;
+      font-size: 0.95rem;
+      padding: 0.4rem 1rem !important;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--teal) !important; }
+    .nav-link.contact-btn {
+      background: var(--teal);
+      color: #0a0f1e !important;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .nav-link.contact-btn:hover { background: #00bfb4; }
 
-    /* Map */
-    .map-wrap { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+    /* ─── Page wrapper ─── */
+    .page-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 1.5rem 3rem;
+    }
 
-    /* Footer */
-    footer { background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); text-align: center; padding: 20px; position: relative; z-index: 1; font-size: 0.9rem; margin-top: 40px; }
+    /* ─── Heading ─── */
+    .page-heading {
+      text-align: center;
+      margin-bottom: 2.8rem;
+      animation: fadeDown 0.6s ease both;
+    }
+    .page-heading h1 {
+      font-family: 'Kanit', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #fff;
+    }
+    .page-heading p {
+      margin-top: 0.5rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Contact container ─── */
+    .contact-container {
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 1.5rem;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+    @media (max-width: 700px) {
+      .contact-container { grid-template-columns: 1fr; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Glass card ─── */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .glass-card:hover {
+      border-color: rgba(0,212,200,0.4);
+      transform: translateY(-3px);
+    }
+
+    /* ─── Info card ─── */
+    .info-card { padding: 2rem 1.8rem; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    .info-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .info-row:last-child { border-bottom: none; }
+
+    .info-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(0,212,200,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .info-text { display: flex; flex-direction: column; gap: 0.15rem; }
+    .info-text span:first-child {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .info-text span:last-child, .info-text a {
+      font-size: 0.95rem;
+      color: #dceaf8;
+      text-decoration: none;
+      line-height: 1.5;
+    }
+    .info-text a { color: var(--teal); }
+    .info-text a:hover { text-decoration: underline; }
+
+    /* ─── Map card ─── */
+    .map-card { display: flex; flex-direction: column; min-height: 380px; }
+
+    .map-header {
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .map-card iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      display: block;
+      min-height: 320px;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center;
+      padding: 1.3rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      font-size: 0.83rem;
+    }
   </style>
 </head>
 <body>
 
-  <div class="bg-wrap"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
-  <nav class="navbar navbar-expand-lg glass-nav fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">🎓 UniGuide</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMenu">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="index.html">หน้าแรก</a>
-          <a class="nav-link" href="faculty.html">คณะ</a>
-          <a class="nav-link" href="about.html">เกี่ยวกับ</a>
-          <a class="nav-link active" href="contact.html">ติดต่อ</a>
-        </div>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg glass-nav fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">🔮 UniGuide</a>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="index.html">หน้าแรก</a>
+        <a class="nav-link" href="faculty.html">คณะ</a>
+        <a class="nav-link" href="about.html">เกี่ยวกับ</a>
+        <a class="nav-link contact-btn active" href="contact.html">ติดต่อ</a>
       </div>
-    </div>
-  </nav>
-
-  <div class="page-header">
-    <div class="container">
-      <h1 class="display-5">ติดต่อมหาลัย</h1>
-      <p class="lead">มหาวิทยาลัยศิลปากร วิทยาเขตพระราชวังสนามจันทร์</p>
     </div>
   </div>
+</nav>
 
-  <div class="container pb-5" style="position:relative;z-index:1">
-    <div class="row g-4">
+<!-- PAGE WRAPPER -->
+<div class="page-wrapper">
 
-      <div class="col-md-6">
-        <div class="g-card">
-          <h4>📍 ข้อมูลติดต่อ</h4>
-
-          <div class="contact-item">
-            <div class="contact-icon">📍</div>
-            <div>
-              <p class="contact-label">ที่อยู่</p>
-              <p class="contact-value">6 ถนนราชมรรคาใน ตำบลพระปฐมเจดีย์<br>อำเภอเมืองนครปฐม จังหวัดนครปฐม 73000</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon">📞</div>
-            <div>
-              <p class="contact-label">โทรศัพท์</p>
-              <p class="contact-value">0-3410-9686</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon">📧</div>
-            <div>
-              <p class="contact-label">Email</p>
-              <p class="contact-value">SU-CENTRAL@SU.AC.TH</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon">📘</div>
-            <div>
-              <p class="contact-label">Facebook</p>
-              <p class="contact-value">
-                <a href="https://www.facebook.com/SilpakornUniversity" target="_blank">facebook.com/SilpakornUniversity</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="g-card">
-          <h4>🗺️ แผนที่</h4>
-          <div class="map-wrap ratio ratio-4x3">
-            <iframe
-              src="https://www.google.com/maps?q=มหาวิทยาลัยศิลปากร+วิทยาเขตพระราชวังสนามจันทร์&output=embed"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy">
-            </iframe>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <!-- Heading -->
+  <div class="page-heading">
+    <h1>ติดต่อมหาลัย</h1>
+    <p>มหาวิทยาลัยศิลปากร วิทยาเขตพระราชวังสนามจันทร์</p>
   </div>
 
-  <footer>กลุ่ม Teletubbies | คณะและสาขาใน มหาวิทยาลัยศิลปากร วิทยาเขตพระราชวังสนามจันทร์</footer>
+  <!-- Contact + Map -->
+  <div class="contact-container">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Info Card -->
+    <div class="glass-card info-card">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        ข้อมูลติดต่อ
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <span>ที่อยู่</span>
+          <span>6 ถนนราชมรรคาใน ตำบลพระปฐมเจดีย์<br>อำเภอเมืองนครปฐม จังหวัดนครปฐม 73000</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <span>โทรศัพท์</span>
+          <a href="tel:034109686">0-3410-9686</a>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">📧</div>
+        <div class="info-text">
+          <span>Email</span>
+          <a href="mailto:SU-CENTRAL@SU.AC.TH">SU-CENTRAL@SU.AC.TH</a>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">🔵</div>
+        <div class="info-text">
+          <span>Facebook</span>
+          <a href="https://facebook.com/SilpakornUniversity" target="_blank" rel="noopener">
+            facebook.com/SilpakornUniversity
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Card -->
+    <div class="glass-card map-card">
+      <div class="map-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+          <line x1="9" y1="3" x2="9" y2="18"/>
+          <line x1="15" y1="6" x2="15" y2="21"/>
+        </svg>
+        แผนที่
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.462068185974!2d100.05640031484374!3d13.819740790296986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2e6c2e5ba9c9b%3A0xf118bb3ecba96e20!2sSilpakorn%20University%2C%20Sanam%20Chandra%20Palace%20Campus!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="แผนที่มหาวิทยาลัยศิลปากร วิทยาเขตพระราชวังสนามจันทร์"
+      ></iframe>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  กลุ่ม Teletubbies | คณะและสาขาใน มหาวิทยาลัยศิลปากร วิทยาเขตพระราชวังสนามจันทร์
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
